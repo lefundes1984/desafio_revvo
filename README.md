@@ -1,16 +1,22 @@
 # Desafio Revvo
 
-Aplicação PHP 8.3 com Tailwind/Gulp e banco PostgreSQL via Docker Compose.
+Aplicação PHP 8.3 com arquitetura MVC enxuta, Tailwind + Gulp para front-end, e PostgreSQL como base de dados. Camadas principais:
+- **Domínio**: modelos e serviços de cursos e slides (`app/Domain`).
+- **HTTP**: controllers, roteador simples e views PHP em `app/Views`.
+- **Build front**: Tailwind/PostCSS e Gulp (`resources/css`, `resources/js`, `gulpfile.js`), com bundle em `public/assets/dist`.
+- **Dados**: repositórios via PDO; schema mínimo criado automaticamente (tabela `courses` com imagens, destaque, etc.).
 
-## Como rodar com Docker
-1. Copie o arquivo de ambiente e ajuste se preciso: `cp .env.example .env`.
-2. Suba os containers (PHP + Postgres): `docker compose up --build` (use `sudo` se necessário).
-3. A aplicação fica disponível em http://localhost:8000 e o banco em `localhost:5433` (porta do host mapeada para o 5432 do container).
+## Stack
+- PHP 8.3 (CLI server)
+- PostgreSQL (via Docker)
+- Tailwind CSS + PostCSS + Gulp
+- Node/npm para build do front
 
-O container PHP executa `composer install` automaticamente no start e usa o servidor embutido servindo o diretório `public/`. Os dados do Postgres ficam no volume `pgdata`.
+## Como executar com Docker Compose
+1. Copie o ambiente padrão e ajuste se necessário:  
+   `cp .env.example .env`
+2. Suba os serviços (app PHP + Postgres):  
+   `docker compose up --build`  *(use `sudo` se necessário)*
+3. Acesse a aplicação em `http://localhost:8000`. O Postgres expõe a porta `5433` no host.
 
-### Dicas rápidas
-- A tabela `courses` é criada automaticamente na primeira conexão, caso não exista.
-- Para popular o banco: `docker compose exec db psql -U desafio_user -d desafio_revvo -c "INSERT INTO courses (title, description, price) VALUES ('Demo', 'Lorem ipsum', 0)"`.
-- Para rodar o build de CSS/JS (no host): `npm install && npm run build`.
-- Formulário web de cadastro fica em `/admin/courses` (cria cursos direto na base).
+O container PHP roda `composer install` ao iniciar e serve `public/`. O banco persiste em `pgdata`.
