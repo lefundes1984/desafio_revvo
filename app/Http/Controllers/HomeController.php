@@ -31,10 +31,12 @@ class HomeController extends Controller
             $course->token = Crypto::encrypt((string) $course->id);
             return $course;
         }, $this->courses->list());
+        $courseSlides = array_values(array_filter($courses, fn ($course) => !empty($course->slideImageUrl)));
 
         return $this->view('pages/home', [
             'slides' => $slides,
             'courses' => $courses,
+            'courseSlides' => $courseSlides,
             'userName' => 'XPTO',
         ]);
     }
