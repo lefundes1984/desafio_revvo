@@ -85,3 +85,27 @@
     if (event.target === overlay) hide();
   });
 })();
+
+(() => {
+  const makePreview = (inputId, previewId) => {
+    const input = document.getElementById(inputId);
+    const preview = document.getElementById(previewId);
+    if (!input || !preview) return;
+
+    input.addEventListener('change', () => {
+      const [file] = input.files || [];
+      if (!file) {
+        preview.classList.add('hidden');
+        preview.src = '#';
+        return;
+      }
+      const url = URL.createObjectURL(file);
+      preview.src = url;
+      preview.classList.remove('hidden');
+      preview.onload = () => URL.revokeObjectURL(url);
+    });
+  };
+
+  makePreview('cover_image', 'cover_preview');
+  makePreview('slide_image', 'slide_preview');
+})();

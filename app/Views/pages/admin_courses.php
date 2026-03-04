@@ -22,41 +22,21 @@ $flash = $flash ?? null;
     <?php endif; ?>
 
     <div class="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200">
-        <div class="border-b border-slate-100 bg-slate-50 px-6 py-4">
-            <h2 class="text-lg font-semibold text-slate-900">Dados do curso</h2>
-            <p class="text-sm text-muted">Título, descrição e upload das imagens de capa e do slide.</p>
-        </div>
         <form method="POST" action="/admin/courses" enctype="multipart/form-data" class="space-y-6 px-6 py-6">
-            <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-                <div class="space-y-2">
-                    <label for="title" class="block text-sm font-medium text-slate-700">Título *</label>
-                    <input
-                        type="text"
-                        id="title"
-                        name="title"
-                        value="<?= htmlspecialchars($old['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?>"
-                        class="w-full rounded-lg border <?= isset($errors['title']) ? 'border-rose-300 ring-2 ring-rose-100' : 'border-slate-200 focus:border-accent focus:ring-2 focus:ring-accent/30'; ?> bg-white px-4 py-3 text-sm shadow-inner outline-none transition"
-                        placeholder="Ex: Fundamentos de Design Thinking"
-                        required
-                    >
-                    <?php if (isset($errors['title'])): ?>
-                        <p class="text-xs font-semibold text-rose-600"><?= htmlspecialchars(implode(' ', $errors['title']), ENT_QUOTES, 'UTF-8'); ?></p>
-                    <?php endif; ?>
-                </div>
-                <div class="space-y-2">
-                    <label for="cover_image" class="block text-sm font-medium text-slate-700">Imagem de capa *</label>
-                    <input
-                        type="file"
-                        id="cover_image"
-                        name="cover_image"
-                        accept="image/*"
-                        class="block w-full cursor-pointer rounded-lg border <?= isset($errors['cover_url']) ? 'border-rose-300 ring-2 ring-rose-100' : 'border-slate-200 focus:border-accent focus:ring-2 focus:ring-accent/30'; ?> bg-white px-4 py-3 text-sm shadow-inner transition"
-                        required
-                    >
-                    <?php if (isset($errors['cover_url'])): ?>
-                        <p class="text-xs font-semibold text-rose-600"><?= htmlspecialchars(implode(' ', $errors['cover_url']), ENT_QUOTES, 'UTF-8'); ?></p>
-                    <?php endif; ?>
-                </div>
+            <div class="space-y-2">
+                <label for="title" class="block text-sm font-medium text-slate-700">Título *</label>
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    value="<?= htmlspecialchars($old['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?>"
+                    class="w-full rounded-lg border <?= isset($errors['title']) ? 'border-rose-300 ring-2 ring-rose-100' : 'border-slate-200 focus:border-accent focus:ring-2 focus:ring-accent/30'; ?> bg-white px-4 py-3 text-sm shadow-inner outline-none transition"
+                    placeholder="Ex: Fundamentos de Design Thinking"
+                    required
+                >
+                <?php if (isset($errors['title'])): ?>
+                    <p class="text-xs font-semibold text-rose-600"><?= htmlspecialchars(implode(' ', $errors['title']), ENT_QUOTES, 'UTF-8'); ?></p>
+                <?php endif; ?>
             </div>
 
             <div class="space-y-2">
@@ -75,15 +55,36 @@ $flash = $flash ?? null;
             </div>
 
             <div class="space-y-2">
+                <label for="cover_image" class="block text-sm font-medium text-slate-700">Imagem de capa *</label>
+                <div class="flex items-center gap-3">
+                    <input
+                        type="file"
+                        id="cover_image"
+                        name="cover_image"
+                        accept="image/*"
+                        class="block w-full cursor-pointer rounded-lg border <?= isset($errors['cover_url']) ? 'border-rose-300 ring-2 ring-rose-100' : 'border-slate-200 focus:border-accent focus:ring-2 focus:ring-accent/30'; ?> bg-white px-4 py-3 text-sm shadow-inner transition"
+                        required
+                    >
+                    <img id="cover_preview" src="#" alt="" class="hidden h-14 w-14 rounded-lg object-cover ring-1 ring-slate-200">
+                </div>
+                <?php if (isset($errors['cover_url'])): ?>
+                    <p class="text-xs font-semibold text-rose-600"><?= htmlspecialchars(implode(' ', $errors['cover_url']), ENT_QUOTES, 'UTF-8'); ?></p>
+                <?php endif; ?>
+            </div>
+
+            <div class="space-y-2">
                 <label for="slide_image" class="block text-sm font-medium text-slate-700">Imagem do slide *</label>
-                <input
-                    type="file"
-                    id="slide_image"
-                    name="slide_image"
-                    accept="image/*"
-                    class="block w-full cursor-pointer rounded-lg border <?= isset($errors['slide_image_url']) ? 'border-rose-300 ring-2 ring-rose-100' : 'border-slate-200 focus:border-accent focus:ring-2 focus:ring-accent/30'; ?> bg-white px-4 py-3 text-sm shadow-inner transition"
-                    required
-                >
+                <div class="flex items-center gap-3">
+                    <input
+                        type="file"
+                        id="slide_image"
+                        name="slide_image"
+                        accept="image/*"
+                        class="block w-full cursor-pointer rounded-lg border <?= isset($errors['slide_image_url']) ? 'border-rose-300 ring-2 ring-rose-100' : 'border-slate-200 focus:border-accent focus:ring-2 focus:ring-accent/30'; ?> bg-white px-4 py-3 text-sm shadow-inner transition"
+                        required
+                    >
+                    <img id="slide_preview" src="#" alt="" class="hidden h-14 w-14 rounded-lg object-cover ring-1 ring-slate-200">
+                </div>
                 <?php if (isset($errors['slide_image_url'])): ?>
                     <p class="text-xs font-semibold text-rose-600"><?= htmlspecialchars(implode(' ', $errors['slide_image_url']), ENT_QUOTES, 'UTF-8'); ?></p>
                 <?php endif; ?>
