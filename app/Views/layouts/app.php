@@ -1,5 +1,6 @@
 <?php
   $pageTitle = $pageTitle ?? 'Desafio Revvo';
+  $searchValue = (string) ($searchValue ?? ($query ?? ''));
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -16,13 +17,13 @@
                 <span class="hidden sm:block">REVVO</span>
             </div>
             <div class="nav-actions">
-                <label class="search-field" aria-label="Buscar">
+                <form class="search-field" action="/search" method="get" role="search" aria-label="Buscar cursos">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="11" cy="11" r="7" />
                         <path d="m16 16 4 4" />
                     </svg>
-                    <input type="search" name="q" placeholder="Pesquisar cursos..." class="search-input">
-                </label>
+                    <input type="search" name="q" placeholder="Pesquisar cursos..." value="<?= htmlspecialchars($searchValue, ENT_QUOTES, 'UTF-8'); ?>" class="search-input" autocomplete="off">
+                </form>
                 <span class="nav-divider" aria-hidden="true"></span>
                 <button type="button" class="user-chip">
                     <span class="user-avatar" aria-hidden="true">

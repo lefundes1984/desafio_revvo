@@ -31,6 +31,27 @@ class CourseRepository
         return array_map(fn (array $row): Course => Course::fromArray($row), $rows);
     }
 
+    /**
+     * @return Course[]
+     */
+    public function search(string $term): array
+    {
+        $this->ensureTable();
+        $normalized = function_exists('mb_strtolower') ? mb_strtolower($term) : strtolower($term);
+        $needle = '%' . $normalized . '%';
+
+        $stmt = $this->pdo->prepare(
+            'SELECT id, title, description, price, cover_url, slide_image_url, COALESCE(is_featured, 0) AS is_featured
+             FROM courses
+             WHERE LOWER(title) LIKE :term OR LOWER(description) LIKE :term
+             ORDER BY id DESC'
+        );
+        $stmt->execute(['term' => $needle]);
+        $rows = $stmt->fetchAll();
+
+        return array_map(fn (array $row): Course => Course::fromArray($row), $rows);
+    }
+
     public function find(int $id): ?Course
     {
         $this->ensureTable();

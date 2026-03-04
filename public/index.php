@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminCourseController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CourseDetailController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SlideController;
 use Dotenv\Dotenv;
 
@@ -42,6 +43,7 @@ $request = new Request();
 $router = new Router();
 
 $router->get('/', [HomeController::class, 'index']);
+$router->get('/search', [SearchController::class, 'index']);
 
 $router->get('/admin/courses', [AdminCourseController::class, 'index']);
 $router->post('/admin/courses', [AdminCourseController::class, 'store']);

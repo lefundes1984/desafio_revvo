@@ -21,6 +21,19 @@ class CourseService
         return $this->repository->all();
     }
 
+    /**
+     * @return Course[]
+     */
+    public function search(string $term): array
+    {
+        $clean = trim($term);
+        if ($clean === '') {
+            return [];
+        }
+
+        return $this->repository->search($clean);
+    }
+
     public function find(int $id): ?Course
     {
         return $this->repository->find($id);
