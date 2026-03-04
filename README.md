@@ -1,6 +1,9 @@
 # Desafio Revvo
 
-Aplicação desenvolvida usando PHP 8.3 com arquitetura MVC enxuta, Tailwind + Gulp para front-end, e PostgreSQL como base de dados. Camadas principais:
+Aplicação desenvolvida usando PHP 8.3 com arquitetura MVC enxuta, Tailwind + Gulp para front-end, e PostgreSQL como base de dados. O stack do projeto está conteinerizado: o docker-compose.yml sobe um PHP 8.3 (com nginx/cli do Dockerfile) e um Postgres; não há dependência direta de PHP/Node instalados na máquina host para rodar a aplicação.
+Os pré-requisitos no host são: Docker Desktop (ou Docker Engine) + Docker Compose; no Windows, usar WSL2 habilitado para funcionar bem com bind mounts.
+
+Camadas principais do projeto:
 - **Domínio**: modelos e serviços de cursos e slides (`app/Domain`).
 - **HTTP**: controllers, roteador simples e views PHP em `app/Views`.
 - **Build front**: Tailwind/PostCSS e Gulp (`resources/css`, `resources/js`, `gulpfile.js`), com bundle em `public/assets/dist`.
