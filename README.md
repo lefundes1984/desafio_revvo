@@ -12,7 +12,7 @@ Aplicação desenvolvida usando PHP 8.3 com arquitetura MVC enxuta, Tailwind + G
 - Tailwind CSS + PostCSS + Gulp
 - Node/npm para build do front
 
-## Como executar com Docker Compose
+## Executando o projeto em 3 passos com Docker Compose
 1. Copie o ambiente padrão e ajuste se necessário:  
    `cp .env.example .env`
 2. Suba os serviços (app PHP + Postgres):  
