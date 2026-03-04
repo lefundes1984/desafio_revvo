@@ -1,6 +1,6 @@
 # Desafio Revvo
 
-Aplicação PHP 8.3 com arquitetura MVC enxuta, Tailwind + Gulp para front-end, e PostgreSQL como base de dados. Camadas principais:
+Aplicação desenvolvida usando PHP 8.3 com arquitetura MVC enxuta, Tailwind + Gulp para front-end, e PostgreSQL como base de dados. Camadas principais:
 - **Domínio**: modelos e serviços de cursos e slides (`app/Domain`).
 - **HTTP**: controllers, roteador simples e views PHP em `app/Views`.
 - **Build front**: Tailwind/PostCSS e Gulp (`resources/css`, `resources/js`, `gulpfile.js`), com bundle em `public/assets/dist`.
