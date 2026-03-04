@@ -7,6 +7,7 @@ use App\Core\Router;
 use App\Http\Controllers\AdminCourseController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CourseDetailController;
 use App\Http\Controllers\SlideController;
 use Dotenv\Dotenv;
 
@@ -47,6 +48,8 @@ $router->post('/admin/courses', [AdminCourseController::class, 'store']);
 $router->get('/admin/courses/{token}/edit', [AdminCourseController::class, 'edit']);
 $router->post('/admin/courses/{token}', [AdminCourseController::class, 'update']);
 $router->delete('/admin/courses/{token}', [AdminCourseController::class, 'destroy']);
+
+$router->get('/courses/{token}', [CourseDetailController::class, 'show']);
 
 $router->get('/api/courses', [CourseController::class, 'index']);
 $router->get('/api/courses/{id}', [CourseController::class, 'show']);

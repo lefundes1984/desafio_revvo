@@ -37,7 +37,11 @@ $heroItems = $courseSlides ?? [];
                         <?= htmlspecialchars($description, ENT_QUOTES, 'UTF-8'); ?>
                     </p>
                     <div class="flex flex-wrap gap-3">
-                        <a href="#" class="rounded-full bg-accent px-5 py-2 text-sm font-semibold text-white shadow hover:bg-sky-500">Ver curso</a>
+                        <?php if ($item instanceof Course): ?>
+                            <a href="/courses/<?= htmlspecialchars($item->token ?? '', ENT_QUOTES, 'UTF-8'); ?>" class="rounded-full bg-accent px-5 py-2 text-sm font-semibold text-white shadow hover:bg-sky-500">Ver curso</a>
+                        <?php else: ?>
+                            <a href="#" class="rounded-full bg-accent px-5 py-2 text-sm font-semibold text-white shadow hover:bg-sky-500">Ver curso</a>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -112,12 +116,12 @@ $heroItems = $courseSlides ?? [];
                     >
                         <?= htmlspecialchars($course->description ?: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', ENT_QUOTES, 'UTF-8'); ?>
                     </p>
-                    <button
-                        type="button"
+                    <a
+                        href="/courses/<?= htmlspecialchars($course->token ?? '', ENT_QUOTES, 'UTF-8'); ?>"
                         class="mt-auto inline-flex items-center justify-center rounded-full bg-emerald-500 px-4 py-2 text-sm font-semibold uppercase tracking-wide text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500"
                     >
                         VER CURSO
-                    </button>
+                    </a>
                 </div>
             </article>
         <?php endforeach; ?>
