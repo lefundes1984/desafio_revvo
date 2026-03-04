@@ -109,3 +109,129 @@
   makePreview('cover_image', 'cover_preview');
   makePreview('slide_image', 'slide_preview');
 })();
+
+(() => {
+  const initialPreview = (inputId, previewId, value) => {
+    const preview = document.getElementById(previewId);
+    if (!preview || !value) return;
+    preview.src = value;
+    preview.classList.remove('hidden');
+  };
+
+  initialPreview('cover_image', 'cover_preview', document.getElementById('cover_preview')?.dataset.src);
+  initialPreview('slide_image', 'slide_preview', document.getElementById('slide_preview')?.dataset.src);
+})();
+
+(() => {
+  const buttons = document.querySelectorAll('[data-course-delete]');
+  if (!buttons.length) return;
+
+  const confirmBox = async () => {
+    return new Promise((resolve) => {
+      const overlay = document.createElement('div');
+      overlay.className = 'swal-overlay';
+      overlay.innerHTML = `
+        <div class="swal-dialog">
+          <h3 class="swal-title">Deseja excluir?</h3>
+          <p class="swal-text">Essa ação é irreversível.</p>
+          <div class="swal-actions">
+            <button type="button" data-swal-cancel>Cancelar</button>
+            <button type="button" data-swal-confirm>Excluir</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(overlay);
+
+      const cleanup = () => overlay.remove();
+      overlay.querySelector('[data-swal-cancel]')?.addEventListener('click', () => {
+        cleanup();
+        resolve(false);
+      });
+      overlay.querySelector('[data-swal-confirm]')?.addEventListener('click', () => {
+        cleanup();
+        resolve(true);
+      });
+    });
+  };
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', async (event) => {
+      event.preventDefault();
+      const token = btn.closest('[data-course-token]')?.dataset.courseToken;
+      if (!token) return;
+      const ok = await confirmBox();
+      if (!ok) return;
+
+      fetch(`/admin/courses/${encodeURIComponent(token)}`, {
+        method: 'DELETE',
+        headers: { 'Accept': 'application/json' }
+      })
+        .then((res) => res.ok ? location.reload() : res.json())
+        .catch(() => null);
+    });
+  });
+})();
+
+(() => {
+  const createToast = (message, type = 'success', redirectTo = null) => {
+    const toast = document.createElement('div');
+    toast.className = `toast ${type === 'error' ? 'is-error' : 'is-success'}`;
+    toast.innerHTML = `
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        ${type === 'error'
+          ? '<path d="M12 9v4"/><path d="M12 17h.01"/><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />'
+          : '<path d="M9 12.75 11.25 15 15 9.75" /><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />'}
+      </svg>
+      <span>${message}</span>
+    `;
+    document.body.appendChild(toast);
+    setTimeout(() => {
+      toast.classList.add('opacity-0', '-translate-y-2');
+    }, 2200);
+    setTimeout(() => {
+      toast.remove();
+      if (redirectTo) window.location.href = redirectTo;
+    }, 3000);
+  };
+
+  const toastEl = document.querySelector('[data-toast]');
+  if (toastEl) {
+    const type = toastEl.dataset.toastType || 'success';
+    const msg = toastEl.textContent.trim();
+    createToast(msg, type, '/');
+    toastEl.remove();
+  }
+
+  const form = document.querySelector('[data-course-form]');
+  if (!form) return;
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const action = form.getAttribute('action') || window.location.pathname;
+    const method = (form.getAttribute('method') || 'POST').toUpperCase();
+    const redirectTo = form.dataset.redirect || '/';
+    const formData = new FormData(form);
+
+    fetch(action, {
+      method,
+      body: formData,
+      headers: { 'X-Requested-With': 'XMLHttpRequest' }
+    })
+      .then(async (res) => {
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          if (data?.errors) {
+            const first = Object.values(data.errors)[0]?.[0] ?? 'Não foi possível salvar.';
+            createToast(first, 'error');
+          } else {
+            createToast('Não foi possível salvar.', 'error');
+          }
+          return;
+        }
+        createToast(data?.message ?? 'Salvo com sucesso!', 'success', redirectTo);
+      })
+      .catch(() => {
+        createToast('Erro de rede. Tente novamente.', 'error');
+      });
+  });
+})();

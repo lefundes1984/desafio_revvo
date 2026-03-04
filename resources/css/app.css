@@ -98,9 +98,73 @@
     @apply absolute inset-y-0 z-20 flex items-center px-4 text-white/80 transition hover:text-white;
   }
 
+  .card-media {
+    @apply relative h-40 w-full overflow-hidden bg-slate-100;
+  }
+
+  .card-actions {
+    @apply absolute inset-x-2 top-2 flex justify-end gap-2 opacity-0 transition;
+  }
+
+  .card-icon {
+    @apply inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-slate-700 shadow hover:-translate-y-0.5 hover:bg-white hover:shadow-md transition;
+  }
+
+  .group:hover .card-actions {
+    @apply opacity-100;
+  }
+
+  .swal-overlay {
+    @apply fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 px-4;
+  }
+
+  .swal-dialog {
+    @apply w-full max-w-xs rounded-2xl bg-white p-5 text-center shadow-2xl;
+  }
+
+  .swal-title {
+    @apply text-lg font-semibold text-slate-900;
+  }
+
+  .swal-text {
+    @apply mt-2 text-sm text-slate-600;
+  }
+
+  .swal-actions {
+    @apply mt-4 flex items-center justify-center gap-3;
+  }
+
+  .swal-actions button {
+    @apply min-w-[96px] rounded-full px-4 py-2 text-sm font-semibold shadow-sm transition;
+  }
+
+  [data-swal-cancel] {
+    @apply border border-slate-200 bg-white text-slate-700 hover:bg-slate-50;
+  }
+
+  [data-swal-confirm] {
+    @apply bg-rose-500 text-white hover:bg-rose-600;
+  }
+
   .footer-shell {
     height: 117px;
     @apply mt-16 flex flex-col;
+  }
+
+  .toast {
+    @apply fixed right-4 top-4 z-50 flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-white shadow-lg transition;
+  }
+
+  .toast svg {
+    @apply h-5 w-5;
+  }
+
+  .toast.is-success {
+    @apply bg-emerald-500;
+  }
+
+  .toast.is-error {
+    @apply bg-rose-500;
   }
 
   .footer-top {

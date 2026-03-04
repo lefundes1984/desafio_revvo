@@ -44,6 +44,9 @@ $router->get('/', [HomeController::class, 'index']);
 
 $router->get('/admin/courses', [AdminCourseController::class, 'index']);
 $router->post('/admin/courses', [AdminCourseController::class, 'store']);
+$router->get('/admin/courses/{token}/edit', [AdminCourseController::class, 'edit']);
+$router->post('/admin/courses/{token}', [AdminCourseController::class, 'update']);
+$router->delete('/admin/courses/{token}', [AdminCourseController::class, 'destroy']);
 
 $router->get('/api/courses', [CourseController::class, 'index']);
 $router->get('/api/courses/{id}', [CourseController::class, 'show']);

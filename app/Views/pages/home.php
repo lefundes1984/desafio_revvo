@@ -60,7 +60,7 @@ use App\Domain\Slideshow\Slide;
         <?php foreach ($courses as $course): ?>
             <?php /** @var Course $course */ ?>
             <article class="group flex h-full flex-col overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-slate-100 transition hover:-translate-y-1 hover:shadow-lg">
-                <div class="h-40 w-full bg-slate-100">
+                <div class="card-media">
                     <?php if (!empty($course->coverUrl)): ?>
                         <img
                             src="<?= htmlspecialchars($course->coverUrl, ENT_QUOTES, 'UTF-8'); ?>"
@@ -78,6 +78,22 @@ use App\Domain\Slideshow\Slide;
                             </svg>
                         </div>
                     <?php endif; ?>
+                    <div class="card-actions" data-course-token="<?= htmlspecialchars($course->token ?? '', ENT_QUOTES, 'UTF-8'); ?>">
+                        <a href="/admin/courses/<?= htmlspecialchars($course->token ?? '', ENT_QUOTES, 'UTF-8'); ?>/edit" class="card-icon" aria-label="Editar curso">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+                            </svg>
+                        </a>
+                        <button type="button" class="card-icon" data-course-delete aria-label="Excluir curso">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 6h18" />
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+                                <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                                <line x1="10" x2="10" y1="11" y2="17" />
+                                <line x1="14" x2="14" y1="11" y2="17" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
                 <div class="flex flex-1 flex-col gap-3 px-4 py-4">
                     <h3 class="text-lg font-semibold text-slate-900"><?= htmlspecialchars($course->title, ENT_QUOTES, 'UTF-8'); ?></h3>

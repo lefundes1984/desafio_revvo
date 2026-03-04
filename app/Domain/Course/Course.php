@@ -13,6 +13,7 @@ class Course
         public float $price,
         public ?string $coverUrl = null,
         public ?string $slideImageUrl = null,
+        public ?string $token = null,
     ) {
     }
 
