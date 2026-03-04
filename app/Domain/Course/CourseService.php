@@ -1,0 +1,85 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Domain\Course;
+
+use App\Core\Validator;
+use PDOException;
+
+class CourseService
+{
+    public function __construct(private readonly CourseRepository $repository)
+    {
+    }
+
+    /**
+     * @return Course[]
+     */
+    public function list(): array
+    {
+        return $this->repository->all();
+    }
+
+    public function find(int $id): ?Course
+    {
+        return $this->repository->find($id);
+    }
+
+    public function create(array $payload): array
+    {
+        $errors = Validator::validate($payload, [
+            'title' => 'required|string|max:120',
+            'description' => 'required|string|max:500',
+            'price' => 'required|numeric',
+        ]);
+
+        if ($errors) {
+            return ['errors' => $errors];
+        }
+
+        $course = $this->repository->create(
+            Course::fromArray([
+                'title' => $payload['title'],
+                'description' => $payload['description'],
+                'price' => (float) $payload['price'],
+                'cover_url' => $payload['cover_url'] ?? null,
+            ])
+        );
+
+        return ['course' => $course];
+    }
+
+    public function update(int $id, array $payload): array
+    {
+        $course = $this->find($id);
+        if (!$course) {
+            return ['errors' => ['message' => 'Curso não encontrado']];
+        }
+
+        $course->title = $payload['title'] ?? $course->title;
+        $course->description = $payload['description'] ?? $course->description;
+        $course->price = isset($payload['price']) ? (float) $payload['price'] : $course->price;
+        $course->coverUrl = $payload['cover_url'] ?? $course->coverUrl;
+
+        try {
+            $this->repository->update($course);
+        } catch (PDOException $e) {
+            return ['errors' => ['message' => $e->getMessage()]];
+        }
+
+        return ['course' => $course];
+    }
+
+    public function delete(int $id): array
+    {
+        $course = $this->find($id);
+        if (!$course) {
+            return ['errors' => ['message' => 'Curso não encontrado']];
+        }
+
+        $this->repository->delete($id);
+
+        return ['deleted' => true];
+    }
+}

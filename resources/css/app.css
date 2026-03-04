@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 font-body antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-heading text-slate-900;
+  }
+}
+
+@layer components {
+  .nav-shell {
+    @apply sticky top-0 left-0 right-0 z-20 bg-white/80 backdrop-blur shadow-sm;
+  }
+
+  .nav-inner {
+    @apply mx-auto flex max-w-7xl items-center gap-6 px-6 py-3;
+  }
+
+  .brand-mark {
+    @apply flex items-center gap-2 font-semibold tracking-tight text-slate-900;
+    font-size: 3.125rem;
+  }
+
+  .search-field {
+    @apply w-64 rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm text-slate-800 shadow-inner outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/30 md:w-72;
+  }
+
+  .user-chip {
+    @apply flex cursor-pointer items-center gap-3 rounded-full border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md;
+  }
+
+  .hero-shell {
+    @apply relative w-full overflow-hidden bg-slate-900 h-[380px];
+  }
+
+  .hero-slide {
+    @apply absolute inset-0 flex h-full w-full items-center justify-center bg-cover bg-center text-white transition-opacity duration-700;
+  }
+
+  .hero-overlay {
+    @apply absolute inset-0 bg-gradient-to-r from-slate-950/80 via-slate-900/70 to-slate-900/50 pointer-events-none;
+  }
+
+  .hero-content {
+    @apply relative z-10 mx-auto flex w-full max-w-6xl items-start px-6 sm:px-12;
+  }
+
+  .hero-panel {
+    @apply flex w-[517px] max-w-full flex-col items-start gap-4 py-8 sm:py-12 min-h-[300px] text-white;
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(2px);
+    border-radius: 18px;
+    padding: 20px;
+  }
+
+  .hero-title {
+    @apply text-3xl font-semibold sm:text-4xl text-white;
+  }
+
+  .hero-dots {
+    @apply absolute left-1/2 z-20 flex -translate-x-1/2 items-center gap-2;
+    bottom: 12px;
+  }
+
+  .hero-dot {
+    @apply h-3 w-3 cursor-pointer rounded-full border border-white/70 bg-white/30 transition hover:bg-white/80;
+  }
+
+  .hero-dot.is-active {
+    @apply bg-white shadow-[0_0_0_4px_rgba(255,255,255,0.2)];
+  }
+
+  .hero-nav {
+    @apply absolute inset-y-0 z-20 flex items-center px-4 text-white/80 transition hover:text-white;
+  }
+}

@@ -1,0 +1,181 @@
+openapi: 3.0.3
+info:
+  title: Revvo LMS API
+  version: 0.1.0
+  description: API CRUD para cursos e slides do desafio Revvo.
+servers:
+  - url: http://localhost:8000
+paths:
+  /api/courses:
+    get:
+      summary: Lista cursos
+      responses:
+        '200':
+          description: Lista de cursos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Course'
+    post:
+      summary: Cria curso
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseInput'
+      responses:
+        '201':
+          description: Curso criado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+        '422':
+          description: Erros de validação
+  /api/courses/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+    get:
+      summary: Busca curso por ID
+      responses:
+        '200':
+          description: Curso encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+        '404':
+          description: Não encontrado
+    put:
+      summary: Atualiza curso
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseInput'
+      responses:
+        '200':
+          description: Curso atualizado
+    delete:
+      summary: Remove curso
+      responses:
+        '200':
+          description: Curso removido
+  /api/slides:
+    get:
+      summary: Lista slides
+      responses:
+        '200':
+          description: Slides retornados
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Slide'
+    post:
+      summary: Cria slide
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SlideInput'
+      responses:
+        '201':
+          description: Slide criado
+  /api/slides/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+    put:
+      summary: Atualiza slide
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SlideInput'
+      responses:
+        '200':
+          description: Slide atualizado
+    delete:
+      summary: Remove slide
+      responses:
+        '200':
+          description: Slide removido
+components:
+  schemas:
+    Course:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        coverUrl:
+          type: string
+    CourseInput:
+      type: object
+      required:
+        - title
+        - description
+        - price
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        cover_url:
+          type: string
+    Slide:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        imageUrl:
+          type: string
+        position:
+          type: integer
+    SlideInput:
+      type: object
+      required:
+        - title
+        - description
+        - image_url
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        image_url:
+          type: string
+        position:
+          type: integer
