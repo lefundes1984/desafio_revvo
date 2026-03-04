@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'revvo/desafio',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '6209f8a9e75e1d85dcba4212cf07668022a1ace8',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -284,9 +284,9 @@
             'dev_requirement' => true,
         ),
         'revvo/desafio' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '6209f8a9e75e1d85dcba4212cf07668022a1ace8',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

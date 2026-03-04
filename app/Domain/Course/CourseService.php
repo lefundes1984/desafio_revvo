@@ -31,7 +31,6 @@ class CourseService
         $errors = Validator::validate($payload, [
             'title' => 'required|string|max:120',
             'description' => 'required|string|max:500',
-            'price' => 'required|numeric',
         ]);
 
         if ($errors) {
@@ -42,8 +41,9 @@ class CourseService
             Course::fromArray([
                 'title' => $payload['title'],
                 'description' => $payload['description'],
-                'price' => (float) $payload['price'],
+                'price' => 0.0,
                 'cover_url' => $payload['cover_url'] ?? null,
+                'slide_image_url' => $payload['slide_image_url'] ?? null,
             ])
         );
 
@@ -61,6 +61,7 @@ class CourseService
         $course->description = $payload['description'] ?? $course->description;
         $course->price = isset($payload['price']) ? (float) $payload['price'] : $course->price;
         $course->coverUrl = $payload['cover_url'] ?? $course->coverUrl;
+        $course->slideImageUrl = $payload['slide_image_url'] ?? $course->slideImageUrl;
 
         try {
             $this->repository->update($course);

@@ -50,3 +50,38 @@
     start();
   });
 })();
+
+(() => {
+  const overlay = document.querySelector('[data-modal]');
+  if (!overlay) return;
+
+  const closeButtons = overlay.querySelectorAll('[data-modal-close]');
+  const storageKey = 'revvo_modal_seen';
+
+  const hide = () => overlay.classList.add('is-hidden');
+  const show = () => overlay.classList.remove('is-hidden');
+
+  const hasSeen = (() => {
+    try {
+      return localStorage.getItem(storageKey) === '1';
+    } catch (e) {
+      return false;
+    }
+  })();
+
+  if (hasSeen) {
+    hide();
+  } else {
+    show();
+    try {
+      localStorage.setItem(storageKey, '1');
+    } catch (e) {
+      // ignore storage errors
+    }
+  }
+
+  closeButtons.forEach((btn) => btn.addEventListener('click', hide));
+  overlay.addEventListener('click', (event) => {
+    if (event.target === overlay) hide();
+  });
+})();

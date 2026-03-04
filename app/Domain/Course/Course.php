@@ -12,6 +12,7 @@ class Course
         public string $description,
         public float $price,
         public ?string $coverUrl = null,
+        public ?string $slideImageUrl = null,
     ) {
     }
 
@@ -22,7 +23,8 @@ class Course
             (string) ($data['title'] ?? ''),
             (string) ($data['description'] ?? ''),
             (float) ($data['price'] ?? 0),
-            $data['cover_url'] ?? $data['coverUrl'] ?? null
+            $data['cover_url'] ?? $data['coverUrl'] ?? null,
+            $data['slide_image_url'] ?? $data['slideImageUrl'] ?? null
         );
     }
 
@@ -34,6 +36,7 @@ class Course
             'description' => $this->description,
             'price' => $this->price,
             'coverUrl' => $this->coverUrl,
+            'slideImageUrl' => $this->slideImageUrl,
         ];
     }
 }

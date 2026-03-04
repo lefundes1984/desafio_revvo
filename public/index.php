@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Core\Request;
 use App\Core\Router;
+use App\Http\Controllers\AdminCourseController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SlideController;
@@ -40,6 +41,9 @@ $request = new Request();
 $router = new Router();
 
 $router->get('/', [HomeController::class, 'index']);
+
+$router->get('/admin/courses', [AdminCourseController::class, 'index']);
+$router->post('/admin/courses', [AdminCourseController::class, 'store']);
 
 $router->get('/api/courses', [CourseController::class, 'index']);
 $router->get('/api/courses/{id}', [CourseController::class, 'show']);
