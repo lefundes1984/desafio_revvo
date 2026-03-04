@@ -15,18 +15,30 @@
             <div class="brand-mark">
                 <span class="hidden sm:block">REVVO</span>
             </div>
-            <div class="ml-auto flex items-center gap-3">
-                <input class="search-field" type="search" name="q" placeholder="Pesquisar cursos..." aria-label="Buscar">
-                <div class="user-chip">
-                    <img src="https://placekitten.com/80/80" alt="Avatar do usuário" class="h-8 w-8 rounded-full object-cover shadow-inner">
+            <div class="nav-actions">
+                <label class="search-field" aria-label="Buscar">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="7" />
+                        <path d="m16 16 4 4" />
+                    </svg>
+                    <input type="search" name="q" placeholder="Pesquisar cursos..." class="search-input">
+                </label>
+                <span class="nav-divider" aria-hidden="true"></span>
+                <button type="button" class="user-chip">
+                    <span class="user-avatar" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-full w-full" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 20a6 6 0 0 0-12 0" />
+                            <circle cx="12" cy="10" r="4" />
+                        </svg>
+                    </span>
                     <div class="leading-tight text-left">
-                        <p class="text-xs text-muted">Seja bem-vindo</p>
-                        <p class="text-sm font-semibold">XPTO</p>
+                        <p class="text-[9px] text-muted font-normal">Seja bem-vindo</p>
+                        <p class="text-[11px] font-semibold">XPTO</p>
                     </div>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4">
                         <path fill-rule="evenodd" d="M12 15.75a.75.75 0 0 1-.53-.22l-5.25-5.25a.75.75 0 1 1 1.06-1.06L12 13.94l4.72-4.72a.75.75 0 1 1 1.06 1.06l-5.25 5.25a.75.75 0 0 1-.53.22Z" clip-rule="evenodd" />
                     </svg>
-                </div>
+                </button>
             </div>
         </div>
     </header>
