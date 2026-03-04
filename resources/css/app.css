@@ -79,6 +79,57 @@
     @apply absolute inset-y-0 z-20 flex items-center px-4 text-white/80 transition hover:text-white;
   }
 
+  .footer-shell {
+    height: 117px;
+    @apply mt-16 flex flex-col;
+  }
+
+  .footer-top {
+    @apply flex-1 bg-white;
+  }
+
+  .footer-bottom {
+    height: 21px;
+    background: #e5e1e2;
+  }
+
+  .footer-inner {
+    @apply mx-auto flex h-full w-full max-w-7xl items-start justify-between gap-8 px-6;
+  }
+
+  .footer-top .footer-inner {
+    @apply pt-4;
+  }
+
+  .footer-brand {
+    @apply text-xl font-semibold tracking-tight text-slate-900;
+  }
+
+  .footer-subcopy {
+    font-size: 11px;
+    @apply text-slate-600 font-normal leading-snug;
+  }
+
+  .footer-links {
+    @apply flex flex-col gap-3 text-left sm:flex-row sm:items-start sm:gap-10;
+  }
+
+  .footer-heading {
+    @apply text-xs font-semibold tracking-[0.2em] text-slate-700;
+  }
+
+  .footer-link {
+    @apply text-sm text-slate-700;
+  }
+
+  .footer-social {
+    @apply mt-2 flex items-center gap-3;
+  }
+
+  .footer-icon {
+    @apply inline-flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-700 transition hover:-translate-y-0.5 hover:bg-slate-200;
+  }
+
   .modal-overlay {
     @apply fixed inset-0 z-30 flex items-center justify-center bg-slate-950/70 px-4 py-6;
   }

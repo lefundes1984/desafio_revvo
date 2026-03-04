@@ -108,12 +108,12 @@ use App\Domain\Slideshow\Slide;
             <div class="space-y-1">
                 <p class="text-base font-semibold uppercase tracking-wide text-slate-900">Adicionar curso</p>
             </div>
-            <button
-                type="button"
+            <a
+                href="/admin/courses"
                 class="inline-flex items-center justify-center rounded-full border border-emerald-500 px-4 py-2 text-sm font-semibold uppercase tracking-wide text-emerald-600 transition hover:-translate-y-0.5 hover:bg-emerald-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500"
             >
                 Novo curso
-            </button>
+            </a>
         </article>
     </div>
 </section>
