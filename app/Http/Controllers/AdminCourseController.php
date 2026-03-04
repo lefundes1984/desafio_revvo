@@ -42,6 +42,7 @@ class AdminCourseController extends Controller
             'description' => $course->description,
             'cover_url' => $course->coverUrl,
             'slide_image_url' => $course->slideImageUrl,
+            'is_featured' => $course->isFeatured,
             'id_token' => Crypto::encrypt((string) $course->id),
             'mode' => 'edit',
         ]);
@@ -60,6 +61,7 @@ class AdminCourseController extends Controller
             'description' => trim((string) $request->input('description', '')),
             'cover_url' => $coverPath ?? trim((string) ($request->input('cover_url') ?? '')),
             'slide_image_url' => $slidePath ?? null,
+            'is_featured' => $request->input('is_featured') ? 1 : 0,
         ];
 
         $errors = [];
@@ -94,7 +96,9 @@ class AdminCourseController extends Controller
         $coverUpload = $files['cover_image'] ?? null;
         $slideUpload = $files['slide_image'] ?? null;
 
-        $payload = [];
+        $payload = [
+            'is_featured' => $request->input('is_featured') ? 1 : 0,
+        ];
 
         $title = trim((string) $request->input('title', ''));
         if ($title !== '') {
@@ -113,6 +117,10 @@ class AdminCourseController extends Controller
         }
         if ($slidePath) {
             $payload['slide_image_url'] = $slidePath;
+        }
+        $featured = $request->input('is_featured');
+        if ($featured !== null) {
+            $payload['is_featured'] = $featured ? 1 : 0;
         }
 
         $result = $this->service->update($id, $payload);

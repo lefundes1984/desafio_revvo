@@ -100,6 +100,10 @@ $idToken = $old['id_token'] ?? null;
                 </div>
 
             <div class="flex flex-wrap items-center justify-end gap-3">
+                <label class="flex items-center gap-2 text-sm font-semibold text-slate-700">
+                    <input type="checkbox" name="is_featured" value="1" class="h-4 w-4 rounded border-slate-300 text-accent focus:ring-accent" <?= (!empty($old['is_featured'])) ? 'checked' : ''; ?>>
+                    Destaque
+                </label>
                 <a href="/admin/courses" class="text-sm font-semibold text-muted hover:text-slate-900">Limpar</a>
                 <button
                     type="submit"

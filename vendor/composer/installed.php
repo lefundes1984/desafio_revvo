@@ -3,7 +3,7 @@
         'name' => 'revvo/desafio',
         'pretty_version' => 'dev-develop',
         'version' => 'dev-develop',
-        'reference' => '1b40a5b5f8b5da00fc87a6d8f6e959ad41a2a466',
+        'reference' => 'f04dbd7b9466b4596f309c3803bafdb34fc357c7',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -286,7 +286,7 @@
         'revvo/desafio' => array(
             'pretty_version' => 'dev-develop',
             'version' => 'dev-develop',
-            'reference' => '1b40a5b5f8b5da00fc87a6d8f6e959ad41a2a466',
+            'reference' => 'f04dbd7b9466b4596f309c3803bafdb34fc357c7',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

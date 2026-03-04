@@ -44,6 +44,7 @@ class CourseService
                 'price' => 0.0,
                 'cover_url' => $payload['cover_url'] ?? null,
                 'slide_image_url' => $payload['slide_image_url'] ?? null,
+                'is_featured' => isset($payload['is_featured']) ? (int) $payload['is_featured'] : 0,
             ])
         );
 
@@ -62,6 +63,9 @@ class CourseService
         $course->price = isset($payload['price']) ? (float) $payload['price'] : $course->price;
         $course->coverUrl = $payload['cover_url'] ?? $course->coverUrl;
         $course->slideImageUrl = $payload['slide_image_url'] ?? $course->slideImageUrl;
+        if (isset($payload['is_featured'])) {
+            $course->isFeatured = (int) $payload['is_featured'];
+        }
 
         try {
             $this->repository->update($course);

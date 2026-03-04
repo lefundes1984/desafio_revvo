@@ -24,7 +24,8 @@ class CourseRepository
      */
     public function all(): array
     {
-        $stmt = $this->pdo->query('SELECT id, title, description, price, cover_url, slide_image_url FROM courses ORDER BY id DESC');
+        $this->ensureTable();
+        $stmt = $this->pdo->query('SELECT id, title, description, price, cover_url, slide_image_url, COALESCE(is_featured, 0) AS is_featured FROM courses ORDER BY id DESC');
         $rows = $stmt->fetchAll();
 
         return array_map(fn (array $row): Course => Course::fromArray($row), $rows);
@@ -32,7 +33,8 @@ class CourseRepository
 
     public function find(int $id): ?Course
     {
-        $stmt = $this->pdo->prepare('SELECT id, title, description, price, cover_url, slide_image_url FROM courses WHERE id = :id');
+        $this->ensureTable();
+        $stmt = $this->pdo->prepare('SELECT id, title, description, price, cover_url, slide_image_url, COALESCE(is_featured, 0) AS is_featured FROM courses WHERE id = :id');
         $stmt->execute(['id' => $id]);
         $row = $stmt->fetch();
 
@@ -42,7 +44,7 @@ class CourseRepository
     public function create(Course $course): Course
     {
         $stmt = $this->pdo->prepare(
-            'INSERT INTO courses (title, description, price, cover_url, slide_image_url) VALUES (:title, :description, :price, :cover_url, :slide_image_url)'
+            'INSERT INTO courses (title, description, price, cover_url, slide_image_url, is_featured) VALUES (:title, :description, :price, :cover_url, :slide_image_url, :is_featured)'
         );
         $stmt->execute([
             'title' => $course->title,
@@ -50,6 +52,7 @@ class CourseRepository
             'price' => $course->price,
             'cover_url' => $course->coverUrl,
             'slide_image_url' => $course->slideImageUrl,
+            'is_featured' => $course->isFeatured,
         ]);
 
         $course->id = (int) $this->pdo->lastInsertId();
@@ -64,7 +67,7 @@ class CourseRepository
         }
 
         $stmt = $this->pdo->prepare(
-            'UPDATE courses SET title = :title, description = :description, price = :price, cover_url = :cover_url, slide_image_url = :slide_image_url WHERE id = :id'
+            'UPDATE courses SET title = :title, description = :description, price = :price, cover_url = :cover_url, slide_image_url = :slide_image_url, is_featured = :is_featured WHERE id = :id'
         );
 
         return $stmt->execute([
@@ -74,6 +77,7 @@ class CourseRepository
             'price' => $course->price,
             'cover_url' => $course->coverUrl,
             'slide_image_url' => $course->slideImageUrl,
+            'is_featured' => $course->isFeatured,
         ]);
     }
 
@@ -99,6 +103,7 @@ class CourseRepository
                 price DECIMAL(10,2) NOT NULL DEFAULT 0,
                 cover_url TEXT NULL,
                 slide_image_url TEXT NULL,
+                is_featured TINYINT(1) NOT NULL DEFAULT 0,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;',
@@ -109,6 +114,7 @@ class CourseRepository
                 price NUMERIC(10,2) NOT NULL DEFAULT 0,
                 cover_url TEXT NULL,
                 slide_image_url TEXT NULL,
+                is_featured SMALLINT NOT NULL DEFAULT 0,
                 created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
                 updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
             );',
@@ -119,6 +125,7 @@ class CourseRepository
                 price REAL NOT NULL DEFAULT 0,
                 cover_url TEXT NULL,
                 slide_image_url TEXT NULL,
+                is_featured INTEGER NOT NULL DEFAULT 0,
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
                 updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
             );',
@@ -126,12 +133,13 @@ class CourseRepository
 
         try {
             $this->pdo->exec($sql);
-            $this->schemaEnsured = true;
+        $this->schemaEnsured = true;
         } catch (PDOException) {
             // Keep schemaEnsured as false so a subsequent attempt can retry.
         }
 
         $this->ensureColumnExists('slide_image_url', 'TEXT NULL');
+        $this->ensureColumnExists('is_featured', 'INTEGER NOT NULL DEFAULT 0');
     }
 
     private function ensureColumnExists(string $column, string $definition): void

@@ -2,8 +2,9 @@
 use App\Domain\Course\Course;
 use App\Domain\Slideshow\Slide;
 
-$heroItems = !empty($courseSlides) ? $courseSlides : $slides;
+$heroItems = $courseSlides ?? [];
 ?>
+<?php if (!empty($courseSlides)): ?>
 <section class="hero-shell" data-slider>
     <button type="button" class="hero-nav left-0" data-slide-prev aria-label="Slide anterior">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -49,6 +50,7 @@ $heroItems = !empty($courseSlides) ? $courseSlides : $slides;
         <?php endforeach; ?>
     </div>
 </section>
+<?php endif; ?>
 
 <section class="mx-auto max-w-6xl px-6 py-12">
     <div class="flex flex-wrap items-end justify-between gap-3 pb-6">

@@ -13,6 +13,7 @@ class Course
         public float $price,
         public ?string $coverUrl = null,
         public ?string $slideImageUrl = null,
+        public int $isFeatured = 0,
         public ?string $token = null,
     ) {
     }
@@ -25,7 +26,8 @@ class Course
             (string) ($data['description'] ?? ''),
             (float) ($data['price'] ?? 0),
             $data['cover_url'] ?? $data['coverUrl'] ?? null,
-            $data['slide_image_url'] ?? $data['slideImageUrl'] ?? null
+            $data['slide_image_url'] ?? $data['slideImageUrl'] ?? null,
+            isset($data['is_featured']) ? (int) $data['is_featured'] : 0
         );
     }
 
@@ -38,6 +40,7 @@ class Course
             'price' => $this->price,
             'coverUrl' => $this->coverUrl,
             'slideImageUrl' => $this->slideImageUrl,
+            'isFeatured' => $this->isFeatured,
         ];
     }
 }
